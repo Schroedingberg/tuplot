@@ -58,7 +58,7 @@ errorbars_on = args.errorbar
 latex = args.latex
 line = args.linestyle
 legend = args.legend
-outfile = args.o
+outfile = args.output_filename
 # This requires that the default numbers are used. A more flexible solution will be added.
 default_colors = dict.fromkeys(numbers)
 default_colors[35] = tudfarben["rot"]
@@ -104,7 +104,6 @@ if not manual_filenames:
 ###Manual filenames############################
 ##########################################################
 else:
-
     alldata = {}
     for f in manual_filenames:
         data = pd.read_csv(f, sep="\s\s\s\s\s\s",
