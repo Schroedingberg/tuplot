@@ -32,7 +32,7 @@ parser.add_argument("-eb", "--errorbar",
                     help="Toggle the errorbars.", action="store_true")
 
 
-parser.add_argument("--latex", help="Provide latex strings (space separated) to style the axis titles. The titles need to be entered surrounded by quotation marks to respect latex syntax.", nargs=2)
+parser.add_argument("--latex", help="Provide latex strings (space separated) to style the axis titles. The titles need to be entered surrounded by SINGLE (the international type) quotation marks to respect latex syntax.", nargs=2)
 
 parser.add_argument("-ls", "--linestyle",
                     help="Set the linestyle of the plot. For example: dotted ..., loosely dotted . . ., dashed ---. Default is solid, which is just a continuous line.", default="solid")
@@ -84,8 +84,8 @@ if not latex:
     plt.xlabel(xtitle)
     plt.ylabel(ytitle)
 else:
-    plt.xlabel(latex[0])
-    plt.ylabel(latex[1])
+    plt.xlabel(str(latex[0]))
+    plt.ylabel(str(latex[1]))
 # plt.show()
 print(latex)
 plt.savefig(prefix + ".png")
