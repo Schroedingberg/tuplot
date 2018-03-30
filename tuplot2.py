@@ -38,12 +38,15 @@ parser.add_argument("--latex", help="Provide latex strings (space separated) to 
 parser.add_argument("-ls", "--linestyle",
                     help="Set the linestyle of the plot. For example: dotted ..., loosely dotted . . ., dashed ---. Default is solid, which is just a continuous line.", default="solid")
 
-parser.add_argument("-L" "--legend", help="Toggle legend.",
+parser.add_argument("-L", "--legend", help="Toggle legend.",
                     action="store_true")
 
 parser.add_argument(
     "-c", "--colors", help="Select the colors in which the lines shall appear. This will only be considered if the -F option is used. The colors will assigned to the filenames in the respective order. The colors available are:\n - blau\n - hellblau\n  - tuerkis\n - gruen\n - gruengelb\n - gelb\n - orange\n - orangerot\n - rot\n - lila\n - lilablau", nargs='+')
+parser.add_argument("-o", "--output-filename",
+                    help="The file the image shall be written to.")
 args = parser.parse_args()
+prefix = args.fileprefix
 manual_filenames = args.filename
 colors = args.colors
 prefix = args.fileprefix
@@ -54,7 +57,8 @@ ytitle = args.yaxis
 errorbars_on = args.errorbar
 latex = args.latex
 line = args.linestyle
-legend = args.L__legend
+legend = args.legend
+outfile = args.o
 # This requires that the default numbers are used. A more flexible solution will be added.
 default_colors = dict.fromkeys(numbers)
 default_colors[35] = tudfarben["rot"]
@@ -130,4 +134,5 @@ else:
         plt.ylabel(str(latex[1]))
         # plt.show()
     print(latex)
-    plt.savefig(prefix + ".png")
+
+    plt.savefig(outfile + ".png")
