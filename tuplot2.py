@@ -2,6 +2,11 @@ import argparse
 import matplotlib.pyplot as plt
 import pandas as pd
 import re
+from matplotlib import rc
+rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+## for Palatino and other serif fonts use:
+#rc('font',**{'family':'serif','serif':['Palatino']})
+rc('text', usetex=True)
 
 parser = argparse.ArgumentParser(
     description="Obtain the names of the files to process from command line, split up into the core name, the numbers and the file extension. The defaults are av_cluster_radius_[35, 50, 75, 100].txt so if you just run the program with no arguments at all, it will do the standard plot. ")
@@ -22,6 +27,8 @@ parser.add_argument(
 parser.add_argument("-eb", "--errorbar",
                     help="Toggle the errorbars.", action="store_true")
 
+
+parser.add_argument("--latex", help = "Provide latex strings (space separated) to style the axis titles. The titles need to be entered surrounded by quotation marks to respect latex syntax." , nargs = 2)
 args = parser.parse_args()
 manual_filenames = args.filename
 prefix = args.fileprefix
@@ -30,7 +37,7 @@ numbers = args.numbers
 xtitle = args.xaxis
 ytitle = args.yaxis
 errorbars_on = args.errorbar
-
+latex = args.latex 
 # Generate a list of filenames from the command line arguments. This only works with files that only differ in a number that is contained in them which is stored in list numbers. This seems like an inconvenient way of doing this, but it saves a lot of typing when using the program.
 myfiles = [prefix + number +
            extension for number in numbers]
@@ -49,8 +56,16 @@ for key, value in alldata.items():
 
     else:
         plt.plot(value['x'], value['y'], label="quench " + key)
+
+
+
 plt.legend(shadow=True)
-plt.xlabel(xtitle)
-plt.ylabel(ytitle)
+if not latex:
+    plt.xlabel(xtitle)
+    plt.ylabel(ytitle)
+else:
+    plt.xlabel(latex[0])
+    plt.ylabel(latex[1])
 # plt.show()
+print(latex)
 plt.savefig(prefix + ".png")

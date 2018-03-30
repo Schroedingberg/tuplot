@@ -1,0 +1,3 @@
+python2 tuplot.py  %Programm ausführen
+
+emacs -nw tuplot.py % Programm bearbeiten
