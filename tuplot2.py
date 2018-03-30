@@ -17,7 +17,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument("-f",
                     "--fileprefix", help="The prefix of the file-series i.e. the actual file name.", default="av_cluster_radius_")
 
-parser.add_argument("-F", "--filename",
+parser.add_argument("-F", "--filename", nargs="+",
                     help="Enter complete filenames manually. The label for the legend will be somehow derived from the filename.")
 parser.add_argument("-e",
                     "--extension", help="File extension. Default is .txt.", default=".txt")
@@ -40,8 +40,11 @@ parser.add_argument("-ls", "--linestyle",
 parser.add_argument("-L" "--legend", help="Toggle legend.",
                     action="store_true")
 
+parser.add_argument(
+    "-c", "--colors", help=r"Select the colors in which the lines shall appear. This will only be considered if the -F option is used. The colors will assigned to the filenames in the respective order. The colors available are:\n - blau\n - hellblau\n  - tuerkis\n - gruen\n - gruengelb\n - gelb\n - orange\n - orangerot\n - rot\n - lila\n - lilablau", nargs='+')
 args = parser.parse_args()
 manual_filenames = args.filename
+colors = args.colors
 prefix = args.fileprefix
 extension = args.extension
 numbers = args.numbers
@@ -58,34 +61,72 @@ default_colors[50] = tudfarben["lila"]
 default_colors[75] = tudfarben["orange"]
 default_colors[100] = tudfarben["gruen"]
 
-# Generate a list of filenames from the command line arguments. This only works with files that only differ in a number that is contained in them which is stored in list numbers. This seems like an inconvenient way of doing this, but it saves a lot of typing when using the program.
-myfiles = [prefix + number +
-           extension for number in numbers]
-alldata = {}
-for myfile, number in zip(myfiles, numbers):
-    data = pd.read_csv(myfile, sep="\s\s\s\s\s\s",
-                       header=None, names=["x", "y", "eb"], engine="python")
 
-    alldata[number] = data
+if not manual_filenames:
+    # Generate a list of filenames from the command line arguments. This only works with files that only differ in a number that is contained in them which is stored in list numbers. This seems like an inconvenient way of doing this, but it saves a lot of typing when using the program.
+    myfiles = [prefix + number +
+               extension for number in numbers]
+    alldata = {}
+    for myfile, number in zip(myfiles, numbers):
+        data = pd.read_csv(myfile, sep="\s\s\s\s\s\s",
+                           header=None, names=["x", "y", "eb"], engine="python")
 
+        alldata[number] = data
 
-for key, value in alldata.items():
-    if errorbars_on:
-        plt.errorbar(value['x'], value['y'],
-                     value['eb'], label="quench" + key, linestyle=line, color=default_colors[key])
+    for key, value in alldata.items():
+        if errorbars_on:
+            plt.errorbar(value['x'], value['y'],
+                         value['eb'], label="quench" + key, linestyle=line, color=default_colors[key])
 
+        else:
+            plt.plot(value['x'], value['y'],
+                     label="quench " + key, linestyle=line, color=default_colors[key])
+
+    if legend:
+        plt.legend(shadow=True)
+    if not latex:
+        plt.xlabel(xtitle)
+        plt.ylabel(ytitle)
     else:
-        plt.plot(value['x'], value['y'],
-                 label="quench " + key, linestyle=line, color=default_colors[key])
+        plt.xlabel(str(latex[0]))
+        plt.ylabel(str(latex[1]))
+        # plt.show()
+    print(latex)
+    plt.savefig(prefix + ".png")
 
-if legend:
-    plt.legend(shadow=True)
-if not latex:
-    plt.xlabel(xtitle)
-    plt.ylabel(ytitle)
+
+##########################################################
+###Manual filenames############################
+##########################################################
 else:
-    plt.xlabel(str(latex[0]))
-    plt.ylabel(str(latex[1]))
-# plt.show()
-print(latex)
-plt.savefig(prefix + ".png")
+
+    alldata = {}
+    for f in manual_filenames:
+        data = pd.read_csv(f, sep="\s\s\s\s\s\s",
+                           header=None, names=["x", "y", "eb"], engine="python")
+
+        alldata[f] = data
+
+    # i is a hack to get another counter here. Not beautiful, but works for now.
+    i = 0
+    for key, value in alldata.items():
+        if errorbars_on:
+            plt.errorbar(value['x'], value['y'],
+                         value['eb'], label="quench" + key, linestyle=line, color=tudfarben[colors[i]])
+
+        else:
+            plt.plot(value['x'], value['y'],
+                     label="quench " + key, linestyle=line, color=tudfarben[colors[i]])
+        i += 1
+
+    if legend:
+        plt.legend(shadow=True)
+    if not latex:
+        plt.xlabel(xtitle)
+        plt.ylabel(ytitle)
+    else:
+        plt.xlabel(str(latex[0]))
+        plt.ylabel(str(latex[1]))
+        # plt.show()
+    print(latex)
+    plt.savefig(prefix + ".png")
