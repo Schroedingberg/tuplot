@@ -2,6 +2,7 @@ import argparse
 import matplotlib.pyplot as plt
 import pandas as pd
 import re
+from argparse import RawTextHelpFormatter
 from matplotlib import rc
 rc('font', **{'family': 'sans-serif', 'sans-serif': ['Helvetica']})
 # for Palatino and other serif fonts use:
@@ -13,7 +14,7 @@ tudfarben = {"blau": "#005AA9", "hellblau": "#0083CC", "tuerkis": "#009D81", "gr
 
 
 parser = argparse.ArgumentParser(
-    description="Obtain the names of the files to process from command line, split up into the core name, the numbers and the file extension. The defaults are av_cluster_radius_[35, 50, 75, 100].txt so if you just run the program with no arguments at all, it will do the standard plot. ")
+    description="Obtain the names of the files to process from command line, split up into the core name, the numbers and the file extension. The defaults are av_cluster_radius_[35, 50, 75, 100].txt so if you just run the program with no arguments at all, it will do the standard plot. ", formatter_class=RawTextHelpFormatter)
 parser.add_argument("-f",
                     "--fileprefix", help="The prefix of the file-series i.e. the actual file name.", default="av_cluster_radius_")
 
@@ -41,7 +42,7 @@ parser.add_argument("-L" "--legend", help="Toggle legend.",
                     action="store_true")
 
 parser.add_argument(
-    "-c", "--colors", help=r"Select the colors in which the lines shall appear. This will only be considered if the -F option is used. The colors will assigned to the filenames in the respective order. The colors available are:\n - blau\n - hellblau\n  - tuerkis\n - gruen\n - gruengelb\n - gelb\n - orange\n - orangerot\n - rot\n - lila\n - lilablau", nargs='+')
+    "-c", "--colors", help="Select the colors in which the lines shall appear. This will only be considered if the -F option is used. The colors will assigned to the filenames in the respective order. The colors available are:\n - blau\n - hellblau\n  - tuerkis\n - gruen\n - gruengelb\n - gelb\n - orange\n - orangerot\n - rot\n - lila\n - lilablau", nargs='+')
 args = parser.parse_args()
 manual_filenames = args.filename
 colors = args.colors
