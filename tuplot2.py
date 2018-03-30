@@ -37,6 +37,9 @@ parser.add_argument("--latex", help="Provide latex strings (space separated) to 
 parser.add_argument("-ls", "--linestyle",
                     help="Set the linestyle of the plot. For example: dotted ..., loosely dotted . . ., dashed ---. Default is solid, which is just a continuous line.", default="solid")
 
+parser.add_argument("-L" "--legend", help="Toggle legend.",
+                    action="store_true")
+
 args = parser.parse_args()
 manual_filenames = args.filename
 prefix = args.fileprefix
@@ -47,6 +50,7 @@ ytitle = args.yaxis
 errorbars_on = args.errorbar
 latex = args.latex
 line = args.linestyle
+legend = args.legend
 # This requires that the default numbers are used. A more flexible solution will be added.
 default_colors = dict.fromkeys(numbers)
 default_colors[35] = tudfarben["rot"]
@@ -74,8 +78,8 @@ for key, value in alldata.items():
         plt.plot(value['x'], value['y'],
                  label="quench " + key, linestyle=line, color=default_colors[key])
 
-
-plt.legend(shadow=True)
+if legend:
+    plt.legend(shadow=True)
 if not latex:
     plt.xlabel(xtitle)
     plt.ylabel(ytitle)
