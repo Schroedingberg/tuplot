@@ -113,7 +113,7 @@ if not manual_filenames:
         plt.ylabel(str(latex[1]))
         # plt.show()
     print(latex)
-    plt.savefig(prefix + ".png")
+    plt.savefig(outfile + ".png")
 
 
 ##########################################################
