@@ -11,8 +11,8 @@ rc('text', usetex=True)
 
 # Constants
 scattersize = 0.5
-tudfarben = {"blau": "#005AA9", "hellblau": "#0083CC", "tuerkis": "#009D81", "gruen": "#99C000", "gruengelb": "#C9D400",
-             "gelb": "#FDCA00", "orange": "#F5A300", "orangerot": "#EC6500", "rot": "#E6001A", "lila": "#A60084", "lilablau": "#721085"}
+tudfarben = {"blau": '#005AA9', "hellblau": '#0083CC', "tuerkis": '#009D81', "gruen": '#99C000', "gruengelb": '#C9D400',
+             "gelb": '#FDCA00', "orange": '#F5A300', "orangerot": '#EC6500', "rot": '#E6001A', "lila": '#A60084', "lilablau": '#721085'}
 ################
 
 parser = argparse.ArgumentParser(
