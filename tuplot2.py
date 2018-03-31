@@ -9,9 +9,11 @@ rc('font', **{'family': 'sans-serif', 'sans-serif': ['Helvetica']})
 # rc('font',**{'family':'serif','serif':['Palatino']})
 rc('text', usetex=True)
 
+# Constants
+scattersize = 0.5
 tudfarben = {"blau": "#005AA9", "hellblau": "#0083CC", "tuerkis": "#009D81", "gruen": "#99C000", "gruengelb": "#C9D400",
              "gelb": "#FDCA00", "orange": "#F5A300", "orangerot": "#EC6500", "rot": "#E6001A", "lila": "#A60084", "lilablau": "#721085"}
-
+################
 
 parser = argparse.ArgumentParser(
     description="Obtain the names of the files to process from command line, split up into the core name, the numbers and the file extension. The defaults are av_cluster_radius_[35, 50, 75, 100].txt so if you just run the program with no arguments at all, it will do the standard plot. ", formatter_class=RawTextHelpFormatter)
@@ -38,6 +40,9 @@ parser.add_argument("--latex", help="Provide latex strings (space separated) to 
 parser.add_argument("-ls", "--linestyle",
                     help="Set the linestyle of the plot. For example: dotted ..., loosely dotted . . ., dashed ---. Default is solid, which is just a continuous line.", default="solid")
 
+parser.add_argument("-sc", "--scatter",
+                    help="Toggle scatterplot. If you use this flag, a scatterplot is created instead of a lineplot.", action="store_true")
+
 parser.add_argument("-L", "--legend", help="Toggle legend.",
                     action="store_true")
 
@@ -45,6 +50,7 @@ parser.add_argument(
     "-c", "--colors", help="Select the colors in which the lines shall appear. This will only be considered if the -F option is used. The colors will assigned to the filenames in the respective order. The colors available are:\n - blau\n - hellblau\n  - tuerkis\n - gruen\n - gruengelb\n - gelb\n - orange\n - orangerot\n - rot\n - lila\n - lilablau", nargs='+')
 parser.add_argument("-o", "--output-filename",
                     help="The file the image shall be written to.")
+
 args = parser.parse_args()
 prefix = args.fileprefix
 manual_filenames = args.filename
@@ -59,6 +65,7 @@ latex = args.latex
 line = args.linestyle
 legend = args.legend
 outfile = args.output_filename
+scatter = args.scatter
 # This requires that the default numbers are used. A more flexible solution will be added.
 default_colors = dict.fromkeys(numbers)
 default_colors[35] = tudfarben["rot"]
@@ -80,12 +87,21 @@ if not manual_filenames:
 
     for key, value in alldata.items():
         if errorbars_on:
-            plt.errorbar(value['x'], value['y'],
-                         value['eb'], label="quench" + key, linestyle=line, color=default_colors[key])
+            if scatter:
+                plt.errorbar(value['x'], value['y'],
+                             value['eb'], label="quench" + key, linestyle=line, color=default_colors[key], fmt='o', s=scattersize)
+
+            else:
+                plt.errorbar(value['x'], value['y'],
+                             value['eb'], label="quench" + key, linestyle=line, color=default_colors[key])
 
         else:
-            plt.plot(value['x'], value['y'],
-                     label="quench " + key, linestyle=line, color=default_colors[key])
+            if scatter:
+                plt.scatter(value['x'], value['y'],
+                            label="quench " + key, linestyle=line, color=default_colors[key], s=scattersize)
+            else:
+                plt.plot(value['x'], value['y'],
+                         label="quench " + key, linestyle=line, color=default_colors[key])
 
     if legend:
         plt.legend(shadow=True)
@@ -115,12 +131,20 @@ else:
     i = 0
     for key, value in alldata.items():
         if errorbars_on:
-            plt.errorbar(value['x'], value['y'],
-                         value['eb'], label="quench" + key, linestyle=line, color=tudfarben[colors[i]])
+            if scatter:
+                plt.errorbar(value['x'], value['y'],
+                             value['eb'], label="quench" + key, linestyle=line, color=tudfarben[colors[i]], fmt='o', s=scattersize)
+            else:
+                plt.errorbar(value['x'], value['y'],
+                             value['eb'], label="quench" + key, linestyle=line, color=tudfarben[colors[i]])
 
         else:
-            plt.plot(value['x'], value['y'],
-                     label="quench " + key, linestyle=line, color=tudfarben[colors[i]])
+            if scatter:
+                plt.scatter(value['x'], value['y'],
+                            label="quench " + key, linestyle=line, color=tudfarben[colors[i]], s=scattersize)
+            else:
+                plt.plot(value['x'], value['y'],
+                         label="quench " + key, linestyle=line, color=tudfarben[colors[i]])
         i += 1
 
     if legend:
