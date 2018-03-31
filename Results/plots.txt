@@ -1,4 +1,0 @@
-python3 tuplot2.py -f av_beadsperblob_ -n 35 50 -y beads\ per\ blob
-python3 tuplot2.py -f av_numberofblobs_ -n 35 50 -y number\ of\ blobs
-python3 tuplot2.py -f av_totaldist_ -n 35 50 -y distance\ between\ blobs
-python3 tuplot2.py -f av_cluster_radius_ -n 35 50 -y radius\ of\ gyration

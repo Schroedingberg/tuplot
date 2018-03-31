@@ -1,3 +1,0 @@
-<inputname>		<achsenbeschriftung>		<outputname>
-av_beadsperblob		beads per blob			beadsperblob
-av_cluster_radius	radius of gyration of cluster	clusterradius

@@ -1,7 +1,0 @@
-Im Prinzip brauche ich zwei Programme:
-Programm 1:
-Das habe ich in der Rohfassung schon geschrieben. tudplot.ty, schicke ich dir zu.
--Einlesen von je vier Dateien mit gleichem Namen, bis auf Nummer (35, 50, 75, 100, evtl. sind Beispieldateien in "Verschieben")
--> Das ist absolut nicht flexibel, ich muss die Namen manuel im Programm ändern. Die vier Dateien per Kommandozeile vorzugeben wäre z.B. gut.
--Erstellen von 5 Plots (die vier vorhandenen, plus eine Extravariante mit 35 alleine (wie z.B. 50 mit eb = error bars))
--> Farbvergabe entsprechend 

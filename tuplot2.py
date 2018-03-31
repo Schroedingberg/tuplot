@@ -73,7 +73,7 @@ if not manual_filenames:
                extension for number in numbers]
     alldata = {}
     for myfile, number in zip(myfiles, numbers):
-        data = pd.read_csv(myfile, sep="\s\s\s\s\s\s",
+        data = pd.read_csv(myfile, sep=",",
                            header=None, names=["x", "y", "eb"], engine="python")
 
         alldata[number] = data
@@ -106,7 +106,7 @@ if not manual_filenames:
 else:
     alldata = {}
     for f in manual_filenames:
-        data = pd.read_csv(f, sep="\s\s\s\s\s\s",
+        data = pd.read_csv(f, sep=",",
                            header=None, names=["x", "y", "eb"], engine="python")
 
         alldata[f] = data
