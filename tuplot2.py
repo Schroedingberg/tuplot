@@ -70,10 +70,10 @@ outfile = args.output_filename
 scatter = args.scatter
 # This requires that the default numbers are used. A more flexible solution will be added.
 default_colors = dict.fromkeys(numbers)
-default_colors[35] = tudfarben["rot"]
-default_colors[50] = tudfarben["lila"]
-default_colors[75] = tudfarben["orange"]
-default_colors[100] = tudfarben["gruen"]
+default_colors['35'] = tudfarben['rot']
+default_colors['50'] = tudfarben['lila']
+default_colors['75'] = tudfarben['orange']
+default_colors['100'] = tudfarben['gruen']
 
 
 if not manual_filenames:
