@@ -88,6 +88,7 @@ if not manual_filenames:
         alldata[number] = data
 
     for key, value in alldata.items():
+        print(key, default_colors[key])
         if errorbars_on:
             if scatter:
                 plt.errorbar(value['x'], value['y'],
