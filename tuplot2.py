@@ -11,13 +11,10 @@ rc('text', usetex=True)
 
 # Constants
 scattersize = 0.5
-<<<<<<< HEAD
-tudfarben = {"blau": "#005AA9", "hellblau": "#0083CC", "tuerkis": "#009D81", "gruen": "#99C000", "gruengelb": "#C9D400",
-             "gelb": "#FDCA00", "orange": "#F5A300", "orangerot": "#EC6500", "rot": "#E6001A", "lila": "#A60084", "lilablau": "#721085"}
-=======
+
 tudfarben = {"blau": '#005AA9', "hellblau": '#0083CC', "tuerkis": '#009D81', "gruen": '#99C000', "gruengelb": '#C9D400',
              "gelb": '#FDCA00', "orange": '#F5A300', "orangerot": '#EC6500', "rot": '#E6001A', "lila": '#A60084', "lilablau": '#721085'}
->>>>>>> 103e9deef84ec0cf5325feb7494221ef2e19e283
+
 ################
 
 parser = argparse.ArgumentParser(
@@ -118,11 +115,7 @@ if not manual_filenames:
         plt.ylabel(str(latex[1]))
         # plt.show()
     print(latex)
-<<<<<<< HEAD
-    plt.savefig(prefix + ".png")
-=======
     plt.savefig(outfile + ".png")
->>>>>>> 103e9deef84ec0cf5325feb7494221ef2e19e283
 
 
 ##########################################################
