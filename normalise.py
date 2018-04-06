@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument("-f", help="The file to process")
 parser.add_argument(
-    "-o", help="The output file. Default is input[:5]+norm.txt")
+    "-o", help="The output file. Default is input[:5]+norm.txt", default="out.txt")
 parser.add_argument(
     "-c", help="Columns to be normalized. Default is only the second one.(Index 1)", default=[1])
 args = parser.parse_args()
