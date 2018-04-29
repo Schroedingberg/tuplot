@@ -21,13 +21,15 @@ parser = argparse.ArgumentParser(
     description="Obtain the names of the files to process from command line, split up into the core name, the numbers and the file extension. The defaults are av_cluster_radius_[35, 50, 75, 100].txt so if you just run the program with no arguments at all, it will do the standard plot. ", formatter_class=RawTextHelpFormatter)
 parser.add_argument("-f",
                     "--fileprefix", help="The prefix of the file-series i.e. the actual file name.", default="av_cluster_radius_")
-
-parser.add_argument("-F", "--filename", nargs="+",
-                    help="Enter complete filenames manually. The label for the legend will be somehow derived from the filename.")
 parser.add_argument("-e",
                     "--extension", help="File extension. Default is .txt.", default=".txt")
 parser.add_argument("-n",
                     "--numbers",  nargs='+', help="The numbers that are contained in the filenames. Currently, exactly four are required.", default=["35", "50", "75", "100"])
+
+parser.add_argument("-F", "--filename", nargs="+",
+                    help="Enter complete filenames manually. The label for the legend will be somehow derived from the filename.")
+parser.add_argument("-o", "--output-filename",
+                    help="The file the image shall be written to.")
 
 parser.add_argument(
     "-x", "--xaxis", help="Set the title of the x-axis.", default="timestep")
@@ -36,22 +38,18 @@ parser.add_argument(
 parser.add_argument("-eb", "--errorbar",
                     help="Toggle the errorbars.", action="store_true")
 
-
-parser.add_argument("--latex", help="Provide latex strings (space separated) to style the axis titles. The titles need to be entered surrounded by SINGLE (the international type) quotation marks to respect latex syntax.", nargs=2)
-
 parser.add_argument("-ls", "--linestyle", nargs="+",
                     help="Set the linestyles of the plot. For example: dotted ..., loosely dotted . . ., dashed ---. Default is solid, which is just a continuous line. If you use this option, you need to provide one style for each file. ", default=["solid"])
+parser.add_argument(
+    "-c", "--colors", help="Select the colors in which the lines shall appear. This will only be considered if the -F option is used. The colors will assigned to the filenames in the respective order. The colors available are:\n - blau\n - hellblau\n  - tuerkis\n - gruen\n - gruengelb\n - gelb\n - orange\n - orangerot\n - rot\n - lila\n - lilablau", nargs='+')
+
 
 parser.add_argument("-sc", "--scatter",
                     help="Toggle scatterplot. If you use this flag, a scatterplot is created instead of a lineplot.", action="store_true")
 
 parser.add_argument("-L", "--legend", help="Toggle legend.",
                     action="store_true")
-
-parser.add_argument(
-    "-c", "--colors", help="Select the colors in which the lines shall appear. This will only be considered if the -F option is used. The colors will assigned to the filenames in the respective order. The colors available are:\n - blau\n - hellblau\n  - tuerkis\n - gruen\n - gruengelb\n - gelb\n - orange\n - orangerot\n - rot\n - lila\n - lilablau", nargs='+')
-parser.add_argument("-o", "--output-filename",
-                    help="The file the image shall be written to.")
+parser.add_argument("--latex", help="Provide latex strings (space separated) to style the axis titles. The titles need to be entered surrounded by SINGLE (the international type) quotation marks to respect latex syntax.", nargs=2)
 
 args = parser.parse_args()
 prefix = args.fileprefix
