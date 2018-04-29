@@ -39,8 +39,8 @@ parser.add_argument("-eb", "--errorbar",
 
 parser.add_argument("--latex", help="Provide latex strings (space separated) to style the axis titles. The titles need to be entered surrounded by SINGLE (the international type) quotation marks to respect latex syntax.", nargs=2)
 
-parser.add_argument("-ls", "--linestyle",
-                    help="Set the linestyle of the plot. For example: dotted ..., loosely dotted . . ., dashed ---. Default is solid, which is just a continuous line.", default="solid")
+parser.add_argument("-ls", "--linestyle", nargs="+",
+                    help="Set the linestyles of the plot. For example: dotted ..., loosely dotted . . ., dashed ---. Default is solid, which is just a continuous line. If you use this option, you need to provide one style for each file. ", default=["solid"])
 
 parser.add_argument("-sc", "--scatter",
                     help="Toggle scatterplot. If you use this flag, a scatterplot is created instead of a lineplot.", action="store_true")
@@ -136,18 +136,18 @@ else:
         if errorbars_on:
             if scatter:
                 plt.errorbar(value['x'], value['y'],
-                             value['eb'], label="quench" + key, linestyle=line, color=tudfarben[colors[i]], fmt='o', s=scattersize)
+                             value['eb'], label="quench" + key, linestyle=line[0] if len(line) == 1 else line[i], color=tudfarben[colors[i]], fmt='o', s=scattersize)
             else:
                 plt.errorbar(value['x'], value['y'],
-                             value['eb'], label="quench" + key, linestyle=line, color=tudfarben[colors[i]])
+                             value['eb'], label="quench" + key, linestyle=line[0] if len(line) == 1 else line[i], color=tudfarben[colors[i]])
 
         else:
             if scatter:
                 plt.scatter(value['x'], value['y'],
-                            label="quench " + key, linestyle=line, color=tudfarben[colors[i]], s=scattersize)
+                            label="quench " + key, linestyle=line[0] if len(line) == 1 else line[i], color=tudfarben[colors[i]], s=scattersize)
             else:
                 plt.plot(value['x'], value['y'],
-                         label="quench " + key, linestyle=line, color=tudfarben[colors[i]])
+                         label="quench " + key, linestyle=line[0] if len(line) == 1 else line[i], color=tudfarben[colors[i]])
         i += 1
 
     if legend:
